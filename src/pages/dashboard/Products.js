@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
 import { addToCart } from '../../redux/cart/actions';
@@ -7,11 +7,12 @@ import { addToCart } from '../../redux/cart/actions';
 const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
+  const [filterText, setFilterText] = useState('');
 
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.cart);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -42,9 +43,23 @@ const Products = () => {
       } else {
         productList = await fetchProducts();
       }
-      setProducts(productList.products);
+      setAllProducts(productList.products);
     })();
   }, [category]);
+
+  useEffect(() => {
+    if (filterText) {
+      setProducts([
+        ...allProducts.filter(
+          (item) =>
+            item.title.toLowerCase().includes(filterText.toLowerCase()) ||
+            item.description.toLowerCase().includes(filterText.toLowerCase())
+        ),
+      ]);
+    } else {
+      setProducts([...allProducts]);
+    }
+  }, [allProducts, filterText]);
 
   const fetchProductByCategory = async (category) => {
     setIsLoading(true);
@@ -53,6 +68,8 @@ const Products = () => {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   };
+
+  const filterProductsByText = (e) => setFilterText(e.target.value);
 
   const onCategoryChange = async (e) => {
     const cate = e.target.value;
@@ -67,7 +84,15 @@ const Products = () => {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-2 lg:max-w-7xl lg:px-8">
         <div className="flex justify-between my-2">
-          <div>Products</div>
+          <div>
+            <input
+              type="text"
+              name="filterText"
+              placeholder="search products"
+              onChange={filterProductsByText}
+              className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
           {categories.length ? (
             <select name="category" defaultValue="" value={category} onChange={onCategoryChange}>
               <option value="">select category</option>
