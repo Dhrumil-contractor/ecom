@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addToCart, removeFromCart } from './actions';
+import { addToCart, emptyCart, removeFromCart } from './actions';
 
 const initialState = { cart: [] };
 
@@ -12,5 +12,8 @@ export default createReducer(initialState, (builder) => {
     })
     .addCase(removeFromCart, (state, action) => {
       state.cart = state.cart.filter((item) => item !== action.payload);
+    })
+    .addCase(emptyCart, (state) => {
+      state.cart = [];
     });
 });
