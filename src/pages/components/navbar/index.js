@@ -17,7 +17,7 @@ const Navbar = () => {
             </div>
           ) : null}
         </div>
-        <Link>login</Link>
+        <Link to="/login">login</Link>
       </div>
     </nav>
   );
