@@ -1,7 +1,12 @@
-import './App.css';
+import Navbar from './pages/components/navbar';
 
-function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+function App({ children }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
 
 export default App;
