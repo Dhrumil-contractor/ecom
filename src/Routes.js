@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { isAuthenticated } from './helpers/authHelper';
 import Login from './pages/auth/Login';
+import Cart from './pages/cart';
 import Dashboard from './pages/dashboard';
 
 const Redirect = ({ to }) => {
@@ -27,6 +28,14 @@ const PageRoutes = () => (
         element={
           <Protected isSignedIn={isAuthenticated()}>
             <Dashboard />
+          </Protected>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Protected isSignedIn={isAuthenticated()}>
+            <Cart />
           </Protected>
         }
       />
