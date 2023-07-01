@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
+import { addToCart } from '../../redux/cart/actions';
 
 const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
+
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.cart);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -25,7 +30,6 @@ const Products = () => {
   useEffect(() => {
     (async () => {
       const categoryList = await fetchCategories();
-      console.log({ categoryList });
       setCategories(categoryList);
     })();
   }, []);
@@ -55,6 +59,8 @@ const Products = () => {
     setCategory(cate);
   };
 
+  const handleAddToCart = async (idx) => dispatch(addToCart(products[idx]));
+
   return isLoading ? (
     <div className="flex justify-center">Loading...</div>
   ) : (
@@ -74,9 +80,9 @@ const Products = () => {
           ) : null}
         </div>
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
+          {products.map((product, idx) => (
             <div key={product.id} className="group relative">
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none hover:opacity-75 lg:h-80">
                 <img
                   src={product.thumbnail}
                   alt={product.imageAlt}
@@ -86,12 +92,17 @@ const Products = () => {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <span aria-hidden="true" className="absolute inset-0" />
+                    <span aria-hidden="true" className="absolute" />
                     {product.title}
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.rating} &#9733;</p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">&#8377; {product.price}</p>
+                <div className="text-right">
+                  <p className="text-sm font-medium text-gray-900">&#8377; {product.price}</p>
+                  <p className="cursor-pointer" onClick={() => handleAddToCart(idx)}>
+                    Add to cart
+                  </p>
+                </div>
               </div>
             </div>
           ))}
