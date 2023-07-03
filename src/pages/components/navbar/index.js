@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { removeUser } from '../../../redux/user/actions';
 import { useDispatch } from 'react-redux';
+import { emptyCart } from '../../../redux/cart/actions';
 
 const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
@@ -12,6 +13,7 @@ const Navbar = () => {
   const handleLogout = () => {
     // localStorage.setItem('user', null);
     dispatch(removeUser());
+    dispatch(emptyCart());
     navigate('/login');
   };
 
