@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { isAuthenticated } from './helpers/authHelper';
-import Login from './pages/auth/Login';
+import Login from './pages/auth/login';
 import Cart from './pages/cart';
 import Dashboard from './pages/dashboard';
+import Profile from './pages/auth/profile';
 
 const Redirect = ({ to }) => {
   let navigate = useNavigate();
@@ -39,6 +40,7 @@ const PageRoutes = () => (
           </Protected>
         }
       />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   </BrowserRouter>
 );

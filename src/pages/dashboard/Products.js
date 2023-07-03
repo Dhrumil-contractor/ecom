@@ -103,7 +103,13 @@ const Products = () => {
           </div>
           <div className="flex items-center gap-1 sm:gap-5">
             {categories.length ? (
-              <select name="category" defaultValue="" value={category} onChange={onCategoryChange}>
+              <select
+                name="category"
+                defaultValue=""
+                value={category}
+                onChange={onCategoryChange}
+                className="h-10 p-2 rounded-mg cursor-pointer"
+              >
                 <option value="">select category</option>
                 {categories.map((cate) => (
                   <option key={cate} name={cate} value={cate}>
@@ -114,14 +120,14 @@ const Products = () => {
             ) : null}
             <button
               type="button"
-              className="bg-purple-700 text-white px-4 py-1 rounded hover:bg-purple-600"
+              className="bg-purple-700 text-white px-4 py-1 rounded hover:bg-purple-600 h-10"
               onClick={onExport}
             >
               export
             </button>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 mb-10">
           {products.map((product, idx) => (
             <div key={product.id} className="group relative">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none hover:opacity-75 lg:h-80">
@@ -141,9 +147,12 @@ const Products = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium text-gray-900">&#8377; {product.price}</p>
-                  <p className="cursor-pointer" onClick={() => handleAddToCart(idx)}>
+                  <button
+                    className="cursor-pointer bg-orange-700 text-white p-1 rounded-md text-sm hover:bg-orange-600"
+                    onClick={() => handleAddToCart(idx)}
+                  >
                     Add to cart
-                  </p>
+                  </button>
                 </div>
               </div>
             </div>
