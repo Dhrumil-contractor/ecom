@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Login from './pages/auth/login';
@@ -14,20 +14,13 @@ const Redirect = ({ to }) => {
   return null;
 };
 
-const Protected = ({ isSignedIn, children }) => {
-  if (!isSignedIn) return <Navigate to="/login" replace />;
+const Protected = ({ children }) => {
+  const user = useSelector((state) => state.user.user);
+  if (!user?.token) return <Navigate to="/login" replace />;
   return children;
 };
 
 const PageRoutes = () => {
-  const user = useSelector((state) => state.user.user);
-
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
-  useEffect(() => {
-    setIsSignedIn(Boolean(user?.token));
-  }, [user]);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -36,7 +29,7 @@ const PageRoutes = () => {
         <Route
           path="/dashboard"
           element={
-            <Protected isSignedIn={isSignedIn}>
+            <Protected>
               <Dashboard />
             </Protected>
           }
@@ -44,7 +37,7 @@ const PageRoutes = () => {
         <Route
           path="/cart"
           element={
-            <Protected isSignedIn={isSignedIn}>
+            <Protected>
               <Cart />
             </Protected>
           }
