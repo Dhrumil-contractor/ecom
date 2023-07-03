@@ -82,12 +82,12 @@ const Cart = () => {
               <div className="mt-6">
                 <p
                   onClick={() => setOpen((prev) => !prev)}
-                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer"
                 >
                   Checkout
                 </p>
               </div>
-              <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+              <div className="mt-6 flex justify-center text-center text-sm text-gray-500 mb-10">
                 <p>
                   or&nbsp;
                   <Link to="/" className="font-medium text-indigo-600 hover:text-indigo-500">

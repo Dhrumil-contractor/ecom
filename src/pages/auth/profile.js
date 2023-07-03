@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [userProfile, setUserProfile] = useState({});
-  // const userId = JSON.parse(localStorage.getItem('user'));
   const { id: userId } = useSelector((state) => state.user.user);
 
   const fetchUserProfile = async () => {

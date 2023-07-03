@@ -31,7 +31,6 @@ const Login = () => {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
 
-    // localStorage.setItem('user', JSON.stringify(userDetails));
     dispatch(addUser(userDetails));
     navigate('/');
   };
