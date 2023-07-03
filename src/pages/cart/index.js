@@ -92,7 +92,7 @@ const Cart = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center">Nothing in the cart</div>
+            <div className="text-center">Cart is empty !!</div>
           )}
         </div>
       </div>

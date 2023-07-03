@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
+import { addUser } from '../../redux/user/actions';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useState({
@@ -22,7 +25,8 @@ const Login = () => {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
 
-    localStorage.setItem('user', JSON.stringify(userDetails));
+    // localStorage.setItem('user', JSON.stringify(userDetails));
+    dispatch(addUser(userDetails));
     navigate('/');
   };
 

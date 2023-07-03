@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import App from '../../App';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
+import { useSelector } from 'react-redux';
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [userProfile, setUserProfile] = useState({});
-  const userId = JSON.parse(localStorage.getItem('user'));
+  // const userId = JSON.parse(localStorage.getItem('user'));
+  const { id: userId } = useSelector((state) => state.user.user);
 
   const fetchUserProfile = async () => {
     setIsLoading(true);
-    return await Instance.get(Routes.auth.profile + `/${userId.id}`)
+    return await Instance.get(Routes.auth.profile + `/${userId}`)
       .then((res) => res.data)
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
