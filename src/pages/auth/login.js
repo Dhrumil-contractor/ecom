@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
 import { addUser } from '../../redux/user/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.user);
 
   const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (user?.token) navigate('/');
+  }, [user, navigate]);
 
   const handleChange = (e) => setCredentials((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 

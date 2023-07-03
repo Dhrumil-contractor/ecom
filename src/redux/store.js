@@ -1,12 +1,21 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import cartReducer from './cart/reducers';
 import userReducer from './user/reducers';
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
 const combineReducer = combineReducers({ cart: cartReducer, user: userReducer });
 
+const rootReducer = persistReducer(persistConfig, combineReducer);
+
 const store = configureStore({
-  reducer: combineReducer,
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
 
   // without using the Thunk middleware,
@@ -15,4 +24,5 @@ const store = configureStore({
   middleware: [thunk],
 });
 
+export const persistor = persistStore(store);
 export default store;

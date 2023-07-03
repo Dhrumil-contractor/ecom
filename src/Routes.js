@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { isAuthenticated } from './helpers/authHelper';
+import { useSelector } from 'react-redux';
 import Login from './pages/auth/login';
 import Cart from './pages/cart';
 import Dashboard from './pages/dashboard';
@@ -19,30 +19,40 @@ const Protected = ({ isSignedIn, children }) => {
   return children;
 };
 
-const PageRoutes = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route exact path="/" element={<Redirect to="/dashboard" />} />
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/dashboard"
-        element={
-          <Protected isSignedIn={isAuthenticated()}>
-            <Dashboard />
-          </Protected>
-        }
-      />
-      <Route
-        path="/cart"
-        element={
-          <Protected isSignedIn={isAuthenticated()}>
-            <Cart />
-          </Protected>
-        }
-      />
-      <Route path="/profile" element={<Profile />} />
-    </Routes>
-  </BrowserRouter>
-);
+const PageRoutes = () => {
+  const user = useSelector((state) => state.user.user);
+
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    setIsSignedIn(Boolean(user?.token));
+  }, [user]);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Redirect to="/dashboard" />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Protected isSignedIn={isSignedIn}>
+              <Dashboard />
+            </Protected>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Protected isSignedIn={isSignedIn}>
+              <Cart />
+            </Protected>
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 export default PageRoutes;
