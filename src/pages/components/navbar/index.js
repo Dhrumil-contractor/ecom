@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { removeUser } from '../../../redux/user/actions';
 import { useDispatch } from 'react-redux';
 import { emptyCart } from '../../../redux/cart/actions';
+import { clearOrders } from '../../../redux/orders/action';
 
 const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
@@ -13,6 +14,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(removeUser());
     dispatch(emptyCart());
+    dispatch(clearOrders());
     navigate('/login');
   };
 

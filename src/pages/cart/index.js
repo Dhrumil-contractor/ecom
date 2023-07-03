@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import CartModal from './CartModal';
 import { emptyCart, removeFromCart } from '../../redux/cart/actions';
 import { useDispatch } from 'react-redux';
+import { createOrder } from '../../redux/orders/action';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,11 @@ const Cart = () => {
   }, [open, dispatch]);
 
   const removeItemFromCart = (id) => dispatch(removeFromCart(id));
+
+  const onCheckOut = () => {
+    dispatch(createOrder({ products: [...products], total }));
+    setOpen((prev) => !prev);
+  };
 
   return (
     <App>
@@ -81,7 +87,7 @@ const Cart = () => {
               <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
               <div className="mt-6">
                 <p
-                  onClick={() => setOpen((prev) => !prev)}
+                  onClick={onCheckOut}
                   className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer"
                 >
                   Checkout

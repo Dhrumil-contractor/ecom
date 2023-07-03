@@ -4,13 +4,14 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import cartReducer from './cart/reducers';
 import userReducer from './user/reducers';
+import orderReducer from './orders/reducers';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const combineReducer = combineReducers({ cart: cartReducer, user: userReducer });
+const combineReducer = combineReducers({ cart: cartReducer, user: userReducer, orders: orderReducer });
 
 const rootReducer = persistReducer(persistConfig, combineReducer);
 

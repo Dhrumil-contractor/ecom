@@ -5,6 +5,7 @@ import Login from './pages/auth/login';
 import Cart from './pages/cart';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/auth/profile';
+import MyOrders from './pages/orders';
 
 const Redirect = ({ to }) => {
   let navigate = useNavigate();
@@ -43,6 +44,14 @@ const PageRoutes = () => {
           }
         />
         <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/orders"
+          element={
+            <Protected>
+              <MyOrders />
+            </Protected>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

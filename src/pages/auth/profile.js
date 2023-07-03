@@ -3,6 +3,7 @@ import App from '../../App';
 import { Instance } from '../../axios';
 import { Routes } from '../../helpers/routeHelper';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +53,9 @@ function Profile() {
               {userProfile?.university && (
                 <div className="text-gray-700 text-base mt-1">University: {userProfile.university}</div>
               )}
+              <Link to="/orders" className="inline-block my-2 text-purple-700 hover:underline">
+                My Orders
+              </Link>
             </div>
           </div>
         </div>
