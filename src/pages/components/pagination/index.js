@@ -38,7 +38,7 @@ const WithPagination = (OriginalComponent) => {
             <td className="table-cell border">
               <button
                 className="px-2 enabled:hover:bg-purple-600 enabled:hover:text-white disabled:cursor-not-allowed"
-                disabled={(page + 1) * itemsPerPage < totalItems}
+                disabled={(page + 1) * itemsPerPage >= totalItems}
                 onClick={() => setPage((prev) => prev + 1)}
               >
                 Next

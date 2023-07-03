@@ -6,9 +6,11 @@ import CartModal from './CartModal';
 import { emptyCart, removeFromCart } from '../../redux/cart/actions';
 import { useDispatch } from 'react-redux';
 import { createOrder } from '../../redux/orders/action';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [productForPDF, setProductForPDF] = useState([]);
@@ -104,7 +106,18 @@ const Cart = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center">Cart is empty !!</div>
+            <>
+              <div className="text-center">Cart is empty !!</div>
+              <div className="mt-6 mb-6">
+                <button
+                  type="button"
+                  onClick={() => navigate('/orders')}
+                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-orange-700 rounded-md hover:bg-orange-600 focus:outline-none focus:bg-purple-600"
+                >
+                  Check Your Orders
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>
