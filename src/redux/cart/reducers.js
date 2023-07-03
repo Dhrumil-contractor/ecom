@@ -11,7 +11,7 @@ export default createReducer(initialState, (builder) => {
       }
     })
     .addCase(removeFromCart, (state, action) => {
-      state.cart = state.cart.filter((item) => item !== action.payload);
+      state.cart = state.cart.filter((item) => item.id !== action.payload);
     })
     .addCase(emptyCart, (state) => {
       state.cart = [];

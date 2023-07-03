@@ -3,7 +3,7 @@ import App from '../../App';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartModal from './CartModal';
-import { emptyCart } from '../../redux/cart/actions';
+import { emptyCart, removeFromCart } from '../../redux/cart/actions';
 import { useDispatch } from 'react-redux';
 
 const Cart = () => {
@@ -23,6 +23,8 @@ const Cart = () => {
   useEffect(() => {
     if (open) dispatch(emptyCart());
   }, [open, dispatch]);
+
+  const removeItemFromCart = (id) => dispatch(removeFromCart(id));
 
   return (
     <App>
@@ -57,7 +59,11 @@ const Cart = () => {
                   <div className="flex flex-1 items-end justify-between text-sm">
                     <p>&#8377; {product.price}</p>
                     <div className="flex">
-                      <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                      <button
+                        type="button"
+                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        onClick={() => removeItemFromCart(product.id)}
+                      >
                         Remove
                       </button>
                     </div>
